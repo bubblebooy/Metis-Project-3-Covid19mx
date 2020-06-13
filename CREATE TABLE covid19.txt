@@ -1,0 +1,102 @@
+scp -i ~/.ssh/aws_key.pem covid19-mx.zip ubuntu@18.191.26.249:.
+ssh -i ~/.ssh/aws_key.pem ubuntu@18.191.26.249
+
+unzip covid19-mx.zip -d covid19-mx
+
+\connect covid19mx
+
+DROP TABLE covid19;
+CREATE TABLE IF NOT EXISTS covid19 (
+id int NOT NULL,
+sectorID int DEFAULT NULL,
+institutionStateID int DEFAULT NULL,
+genderID int DEFAULT NULL,
+stateID int DEFAULT NULL,
+patientTypeID int DEFAULT NULL,
+admissionDate date DEFAULT NULL,
+symptomDate date DEFAULT NULL,
+deathDate date DEFAULT NULL,
+intubated int DEFAULT NULL,
+pneumonia int DEFAULT NULL,
+age int DEFAULT NULL,
+nationality int DEFAULT NULL,
+diabetes int DEFAULT NULL,
+COPD int DEFAULT NULL,
+asthma int DEFAULT NULL,
+immunosuppression int DEFAULT NULL,
+hypertension int DEFAULT NULL,
+otherDiseases int DEFAULT NULL,
+cardiovascular int DEFAULT NULL,
+obesity int DEFAULT NULL,
+renal int DEFAULT NULL,
+tobacco int DEFAULT NULL,
+contactWithCovid int DEFAULT NULL,
+testResult int DEFAULT NULL,
+intensiveCare int DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY covid19 FROM '/home/ubuntu/covid19-mx/covid-19_general_MX.csv' DELIMITER ',' NULL '9999-99-99' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS states (
+id int NOT NULL,
+state varchar(32) DEFAULT NULL,
+abbreviation varchar(3) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY states FROM '/home/ubuntu/covid19-mx/ENTIDADES.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS nationality (
+id int NOT NULL,
+nationality varchar(20) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY nationality FROM '/home/ubuntu/covid19-mx/NACIONALIDAD.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS origin (
+id int NOT NULL,
+origin  varchar(20) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY origin FROM '/home/ubuntu/covid19-mx/ORIGEN.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS results (
+id int NOT NULL,
+result varchar(24) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY results FROM '/home/ubuntu/covid19-mx/RESULTADO.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS institution (
+id int NOT NULL,
+institution varchar(24) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY institution FROM '/home/ubuntu/covid19-mx/SECTOR.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS gender (
+id int NOT NULL,
+gender varchar(24) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY gender FROM '/home/ubuntu/covid19-mx/SEXO.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS yes_no (
+id int NOT NULL,
+value varchar(24) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY yes_no FROM '/home/ubuntu/covid19-mx/SI_NO.csv' DELIMITER ',' CSV HEADER;
+
+CREATE TABLE IF NOT EXISTS  type (
+id int NOT NULL,
+type varchar(24) DEFAULT NULL,
+PRIMARY KEY (id)
+);
+COPY type FROM '/home/ubuntu/covid19-mx/TIPO_PACIENTE.csv' DELIMITER ',' CSV HEADER;
