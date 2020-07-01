@@ -17,3 +17,6 @@ Data was stored in PostgreSQL on a AWS EC2 Micro instance.
 ## Analysis
 
 Analysis code [Project 3](Project%203.ipynb)
+
+***
+[Max Garber](https://bubblebooy.github.io/max-garber-website)
